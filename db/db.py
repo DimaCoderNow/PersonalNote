@@ -10,6 +10,23 @@ def get_all_notes(user: str) -> list:
         return []
 
 
+def add_note(user: str, text_note: str) -> bool:
+    try:
+        with open("db/note_data.json", "r", encoding="utf-8") as file_data:
+            all_notes = json.load(file_data)
+            if user in all_notes:
+                all_notes[user].append(text_note)
+                try:
+                    with open("db/note_data.json", "w", encoding="utf-8") as new_data:
+                        json.dump(all_notes, new_data, indent=4)
+                        return True
+                except FileNotFoundError:
+                    return False
+            return False
+    except FileNotFoundError:
+        return False
+
+
 def get_user(token: str) -> str:
     try:
         with open("db/user_data.json", "r", encoding="utf-8") as file_data:
