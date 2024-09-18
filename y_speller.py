@@ -10,8 +10,7 @@ def spell_check(text: str) -> str:
         if wrong_words:
             wrong_words.reverse()
             for wrong_word in wrong_words:
-                start = wrong_word["pos"],
+                start = wrong_word["pos"]
                 end = wrong_word["pos"] + wrong_word["len"]
                 text = text[:start] + wrong_word["s"][0] + text[end:]
     return text
-
