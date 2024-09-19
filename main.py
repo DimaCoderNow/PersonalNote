@@ -52,5 +52,6 @@ def user_login(user: User):
         name = user.name
         password = user.password
         token = get_token(name, password)
-        return {"token": token}
+        if token:
+            return {"token": token}
     raise HTTPException(status_code=401, detail="Unauthorized")
