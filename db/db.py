@@ -38,3 +38,16 @@ def get_user(token: str) -> str:
     except FileNotFoundError:
         return ""
 
+
+def get_token(name: str, pwd: str) -> str:
+    try:
+        with open("db/user_data.json", "r", encoding="utf-8") as file_data:
+            all_users = json.load(file_data)
+            if all_users:
+                for token, user in all_users.items():
+                    if user["name"] == name and user["password"] == pwd:
+                        return token
+            else:
+                return ""
+    except FileNotFoundError:
+        return ""
