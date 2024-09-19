@@ -1,23 +1,16 @@
 from fastapi import FastAPI, Security, HTTPException
 from fastapi.security.api_key import APIKeyHeader
-from pydantic import BaseModel
 
 from db.db import get_all_notes, get_token
 from db.db import get_user
 from db.db import add_note
+
+from models import *
+
 from y_speller import spell_check
 
 app = FastAPI()
 authorization = APIKeyHeader(name="Authorization")
-
-
-class NoteData(BaseModel):
-    text_note: str
-
-
-class User(BaseModel):
-    name: str
-    password: str
 
 
 @app.get("/")
