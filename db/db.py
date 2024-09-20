@@ -44,10 +44,11 @@ async def get_user(token: str) -> str:
         return ""
 
 
-def get_token(name: str, pwd: str) -> str:
+async def get_token(name: str, pwd: str) -> str:
     try:
-        with open("db/user_data.json", "r", encoding="utf-8") as file_data:
-            all_users = json.load(file_data)
+        async with aiofiles.open("db/user_data.json", "r", encoding="utf-8") as file_data:
+            file_content = await file_data.read()
+            all_users = json.loads(file_content)
             if all_users:
                 for token, user in all_users.items():
                     if user["name"] == name and user["password"] == pwd:
