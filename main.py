@@ -19,10 +19,10 @@ async def read_root():
 
 
 @app.get("/notes")
-def read_notes(api_token: str = Security(authorization)) -> list[NoteData]:
+async def read_notes(api_token: str = Security(authorization)) -> list[NoteData]:
     user = get_user(api_token)
     if user:
-        notes = get_all_notes(user)
+        notes = await get_all_notes(user)
         notes_data = [NoteData(text_note=note) for note in notes]
         return notes_data
     raise HTTPException(status_code=403, detail="Not authorized")

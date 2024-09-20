@@ -2,10 +2,11 @@ import json
 import aiofiles
 
 
-def get_all_notes(user: str) -> list:
+async def get_all_notes(user: str) -> list:
     try:
-        with open("db/note_data.json", "r", encoding="utf-8") as file_data:
-            all_notes = json.load(file_data)
+        async with aiofiles.open("db/note_data.json", "r", encoding="utf-8") as file_data:
+            file_content = await file_data.read()
+            all_notes = json.loads(file_content)
             return all_notes[user]
     except FileNotFoundError:
         return []
