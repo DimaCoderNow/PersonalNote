@@ -20,7 +20,7 @@ async def read_root():
 
 @app.get("/notes")
 async def read_notes(api_token: str = Security(authorization)) -> list[NoteData]:
-    user = get_user(api_token)
+    user = await get_user(api_token)
     if user:
         notes = await get_all_notes(user)
         notes_data = [NoteData(text_note=note) for note in notes]
@@ -30,7 +30,7 @@ async def read_notes(api_token: str = Security(authorization)) -> list[NoteData]
 
 @app.post("/notes")
 async def add_notes(note_data: NoteData, api_token: str = Security(authorization)):
-    user = get_user(api_token)
+    user = await get_user(api_token)
     if user:
         note_data = await spell_check(note_data.text_note)
         if await add_note(user, text_note=note_data):

@@ -31,10 +31,11 @@ async def add_note(user: str, text_note: str) -> bool:
         return False
 
 
-def get_user(token: str) -> str:
+async def get_user(token: str) -> str:
     try:
-        with open("db/user_data.json", "r", encoding="utf-8") as file_data:
-            all_users = json.load(file_data)
+        async with aiofiles.open("db/user_data.json", "r", encoding="utf-8") as file_data:
+            file_content = await file_data.read()
+            all_users = json.loads(file_content)
             if token in all_users:
                 return all_users[token]["name"]
             else:
