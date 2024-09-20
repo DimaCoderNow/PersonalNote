@@ -33,7 +33,7 @@ async def add_notes(note_data: NoteData, api_token: str = Security(authorization
     user = get_user(api_token)
     if user:
         note_data = await spell_check(note_data.text_note)
-        if add_note(user, text_note=note_data):
+        if await add_note(user, text_note=note_data):
             return {"message": "Note added successfully"}
         raise HTTPException(status_code=500, detail="Failed to add note")
     raise HTTPException(status_code=403, detail="Not authorized")
