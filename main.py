@@ -40,11 +40,11 @@ def add_notes(note_data: NoteData, api_token: str = Security(authorization)):
 
 
 @app.post("/login")
-def user_login(user: User):
+def user_login(user: User) -> Token:
     if user:
         name = user.name
         password = user.password
         token = get_token(name, password)
         if token:
-            return {"token": token}
+            return Token(token=token)
     raise HTTPException(status_code=401, detail="Unauthorized")

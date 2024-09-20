@@ -8,3 +8,7 @@ class NoteData(BaseModel):
 class User(BaseModel):
     name: str
     password: str
+
+
+class Token(BaseModel):
+    token: str
